@@ -153,7 +153,10 @@ public class IndexController {
 		List<ProductVO> dbproductlist =indexservice.searchname(productVO);
 		
 		
-		if (dbproductlist == null) {
+		System.out.println("dbproductlist 찍어보기:"+dbproductlist);
+		
+		
+		if (dbproductlist.isEmpty()) {
 
 			model.addAttribute("message", "검색된 상품이 없습니다.");
 			

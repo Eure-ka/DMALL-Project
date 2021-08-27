@@ -6,9 +6,11 @@
 <title>검색한 상품 페이지</title>
 </head>
 <body>
-<div class="main" layout:fragment="content">
+<div class="searchpg" layout:fragment="content">
 
-		<span th:text="${message}"></span>
+		<div th:if="${message} != null" class="errMsg">
+			<h1  th:text="${message}"></h1>
+		</div>
 		
 		<div class="product-list">
 			    	<div class="inner">
