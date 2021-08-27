@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dteam_Project.admin.model.AdminDAO">
+	
+	<resultMap type="AdminVO" id="adminMap">
+		<id property="admin_id" column="admin_id"/>
+		<result property="admin_pw" column="admin_pw"/>
+		<result property="admin_pw" column="admin_pw"/>
+		<result property="admin_position" column="admin_position"/>
+	</resultMap>
+	
+	<resultMap type="Dteam_Project.admin.model.UserlistVO" id="uselistMap">
+		<id property="user_id" column="user_id"/>
+		<result property="user_pw" column="user_pw"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_reg_date" column="user_reg_date"/>
+	</resultMap>
+
+	<select id="getLoginInfo" parameterType="string" resultMap="adminMap">
+		SELECT admin_id,admin_pw,admin_position FROM admin
+		WHERE admin_id = #{admin_id}
+	</select>
+	
+	<select id="getuserlist" resultMap="uselistMap">
+		select user_id,user_name,user_phone,user_email,user_reg_date from user
+	</select>
+	
+	<select id="getuserinfo" parameterType="string" resultMap="uselistMap">
+		select user_id,user_name,user_phone,user_email,user_reg_date from user where user_id=#{user_id}
+	</select>
+	
+	<update id="uptuserinfo" parameterType="Dteam_Project.admin.model.UserlistVO">
+		update user set  user_name=#{user_name}, user_phone=#{user_phone},user_email=#{user_email} where user_id=#{user_id}
+	</update>
+	
+	<delete id="removeuser" parameterType="string">
+		delete from user where user_id=#{user_id}
+	</delete>
+	
+</mapper>

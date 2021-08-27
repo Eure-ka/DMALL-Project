@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ㅇㅇ쇼핑몰 > 구매창</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <!-- https://postcode.map.daum.net/guide  -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    
+</head>
+
+<body>
+	<div class="container">
+		<div class="table-response">
+		<form name="pForm" action="/purchase/final_result" method="post">
+			<br>
+			<h4>배송정보</h4>
+			<table  width = "550" height="200" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
+			
+			
+				<tr>
+					<td>배송지 선택</td>
+					<td>
+						<input type="radio" name="radioTxt" value="ori" checked>기존 배송지
+						<input type="radio" name="radioTxt" value="new" checked>새로운 배송지
+					</td>
+				</tr>
+				
+				<tr>
+					<td>받으시는분 *</td>
+					<td><input type="text" name="saram" th:value="${session.userLoginVO.user_name}">님</td>
+				</tr>
+				
+				
+				<tr>
+					<td>배송지 *</td>
+					<td>
+						<input type="text" name ="postnum"id="sample6_postcode" placeholder="우편번호">
+						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" name="address" id="sample6_address" placeholder="주소"><br>
+						<input type="text" name="detailadd" id="sample6_detailAddress" placeholder="상세주소">
+						 <input type="text" id="sample6_extraAddress" placeholder="참고항목">            	
+					</td>	
+					
+				</tr>		
+			
+				
+				
+				<tr>
+					<td>휴대전화*</td>
+					<td><input type="text" name="phonenum" th:value="${session.userLoginVO.user_phone}" ></td>
+				</tr>
+				
+				<tr>
+					<td>이메일</td>
+					<td><input type="text" name="email" th:value="${session.userLoginVO.user_email}"></td>
+				</tr>
+				
+		
+			</table>
+			
+			
+				<h4>상품 정보</h4>
+				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
+					<td>선택 상품</td>
+					<td>
+					상품명<input type="text" name="pdname" th:value="${productInfo.product_name}" readonly>
+					갯수 <input type="text"  name="pdqnt" th:value="${resultNumber}" readonly><br>			
+					총금액<input type="text" id="productprice"   th:value="${resultNumber2}" readonly> 
+					</td>	
+				</table>
+				
+				<h4>쿠폰 할인</h4>
+				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
+					
+					<tr th:if="${productInfo.category_id == 100}">
+						<td>																																														
+							상품/주문 쿠폰&nbsp;&nbsp;&nbsp;<input type="text" id="couponDiscountRateInput" readonly value="0">원&nbsp;&nbsp;&nbsp;<input type="button" id="useCoupon" value="쿠폰적용" onclick="openPopupWindow()">&nbsp;&nbsp;&nbsp;(사용가능:<span  class="couponsoo" th:text="${coupocount}+'장'"> </span>||보유:<span class="couponsoo" th:text="${coupocount+'장'}"> </span>)
+							<input type="hidden" name="coupon_id" id="forcpid">
+						</td>
+					</tr>
+					
+					<tr th:unless="${productInfo.category_id == 100}">
+						<td>
+						상품/주문 쿠폰&nbsp;&nbsp;&nbsp;<input type="text" readonly value="0">원&nbsp;&nbsp;&nbsp;<input type="button" value="쿠폰적용" disabled>&nbsp;&nbsp;&nbsp;(사용가능:<span> 0장&nbsp;||&nbsp;&nbsp;&nbsp;</span>보유:<span> 0장</span>)
+						</td>
+					</tr>
+				</table>
+				
+				<h4>결제 금액 예정</h4>
+				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
+					<tr>
+						<td>총 주문 금액 </td>
+						<td>총 할인 금액</td> 
+						<td>총 결제예정 금액 </td>
+					</tr>
+					<tr>
+						<td><input type="text" name="originprice" id="originprice" readonly > </td> 
+						<td><input type="text" name="discountprice" id="discountprice" value="0" readonly > </td>
+						<td><input type="text" name="finalprice" id="totalprice" readonly > </td>
+					</tr>	
+				</table>
+			
+		
+			
+			<br>		
+			<h4>결제 선택</h4>	
+			<table  width = "300" height="50" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">				
+				<tr>
+					<td colspan="1"><input type="submit" value="삼성페이" onclick="purchaseSubmit()"></td>
+					<td colspan="1"><input type="submit" value="신한카드" onclick="purchaseSubmit()"></td>
+					<td colspan="1"><input type="submit" value="차이페이" onclick="purchaseSubmit()"></td>
+				</tr>
+			</table>	
+			
+			<input type="hidden" name="product_code" th:value="${productInfo.product_code}">
+		</form>
+</div>
+<script>
+
+window.name = "parentPage";  // 부모창 이름
+
+window.onload = function ()
+
+{
+
+	let pd_product_value=document.getElementById('productprice').value;
+	let origin =document.getElementById("originprice");
+	let total =document.getElementById("totalprice");
+	
+	origin.value=pd_product_value;
+	total.value=pd_product_value;
+
+}
+
+function purchaseSubmit() {
+	
+	let form=document.forms.pForm;
+	
+	form.submit();
+}
+		
+///주소가져오기
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {	                
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("sample6_extraAddress").value = extraAddr;
+            
+            } else {
+                document.getElementById("sample6_extraAddress").value = '';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample6_postcode').value = data.zonecode;
+            document.getElementById("sample6_address").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("sample6_detailAddress").focus();
+        }
+    }).open();
+}
+</script>
+<script>
+
+function openPopupWindow()
+
+{
+	
+   document.domain = "localhost"; //document.domain 값이 팝업과 부모창 동일해야 합니다.
+
+   window.open("/purchase/coupon", "쿠폰할인", "width=500, height=500, resizable=no, scrollbars=no") 
+
+}
+
+</script>
+</body>
+</html>

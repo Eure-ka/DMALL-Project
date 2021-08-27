@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="header(sports,pancy,food,beaty)">
+	
+		<div class="titleandsearch">
+			<hr color='yellow'>
+			<h1><a  class="text-dark text-decoration-none" href="/main/home">DMALL.COM</a></h1>
+			<div class="header-search">
+				<form class="search-form" action="/main/home" method="post">
+					<select class="search-select" name="category_id">
+						<option th:value="${0}">전체</option>
+					    <option  th:value="${sports}" >스포츠/레저</option>
+					    <option  th:value="${pancy}">문구</option>
+					    <option  th:value="${food}" >식품</option>
+					    <option  th:value="${beaty}">뷰티</option>
+					</select>
+				    <input class="search-input" type="text" name="search" placeholder="검색어를 입력하세요"><button type="submit" class="search-btn"><i class="fas fa-search fa-2x"></i></button>
+				</form>
+			</div>
+		</div>
+		
+		 <div class="header-menu" th:if="${session.userLoginVO} == null and ${session.username} == null" >
+		 	<a class="text-muted" href="/login">로그인</a>&nbsp;&nbsp;
+		   	<a  class="text-muted" href="/user/register">회원가입</a>
+		 </div>
+		 
+		 <div class="header-menu"  th:unless="${session.userLoginVO} == null" >
+		 	<span th:text="${session.userid}"></span>님
+		 	<a href="/logout" >로그아웃</a>
+		 </div>
+		 
+		 <div class="header-menu"  th:if="${session.username} != null" >
+		 	<span th:text="${session.username}"></span>님 <br><span>카카오 or 네이버 로그인 중</span><br>
+		 	<a href="/logout" >로그아웃</a>
+		 </div>
+		  
+		  <div class="header-icon">
+		  	<div class="icon-info"><a href="/user/check"><i class="far fa-user"></i><br><span>회원정보</span></a></div>
+		  	<div class="icon-bsk"><a href="/basket/basketlist"><i class="fas fa-shopping-basket" ></i><br><span>장바구니</span></a></div>
+		  </div>
+		   
+		 
+
+		<hr color='yellow'> 
+	</div>
+</html>

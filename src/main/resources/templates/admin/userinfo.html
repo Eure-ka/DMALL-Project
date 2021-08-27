@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원정보</title>
+</head>
+<body>
+	<h1><span th:text="${userinfo.user_name}"></span>님의 회원정보입니다.</h1>
+	<form action="/ad/uptUser" method="post">
+		<table border="1">
+				<tr>
+					<td>아이디</td><td><input type="text" name="user_id" th:value="${userinfo.user_id}" readonly></td>
+				</tr>
+				<tr>
+					<td>이름</td><td><input type="text" name="user_name" th:value="${userinfo.user_name}"></td>
+				</tr>		
+				<tr>
+					<td>이메일</td><td ><input type="text" name="user_email" th:value="${userinfo.user_email}"></td>
+				</tr>	
+				<tr>
+					<td>전화번호</td><td ><input type="text" name="user_phone" th:value="${userinfo.user_phone}"></td>
+				</tr>	
+				<tr>
+					<td>회원가입일</td><td ><input type="text"  th:value="${#dates.format(userinfo.user_reg_date, 'yyyy-MM-dd')}" readonly></td>
+				</tr>	
+			</table>
+			<input type="submit" value="회원정보 수정하기">
+	</form>
+	<form action="/ad/deleteUser" method="post">
+		<input type="hidden" name="user_id" th:value="${userinfo.user_id}"/>
+		<input type="submit" onClick="remove()" value="회원추방" />
+	</form>
+	<script>
+	
+		function remove(){
+			
+			let chooese=confirm("정말로 사용자를 강제추방 하시겠습니까???");
+			
+			if (chooese == true){
+				document.form.submit();
+			}else{
+				return
+			}
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<html mlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="aside(sports,pancy,food,beaty)">
+	<div  id="category-box">
+					<i class="fas fa-bars fa-4x"></i><br>
+					카테고리
+						<ul class="category-menu">
+							<li><i class="fas fa-baseball-ball"></i><a th:href="@{/main/category}+'/'+${sports}" class="text-light">스포츠/레저</a></li>
+							<li><i class="fas fa-pencil-alt"></i><a th:href="@{/main/category}+'/'+${pancy}" class="text-light">문구</a></li>
+							<li><i class="fas fa-apple-alt"></i><a th:href="@{/main/category}+'/'+${food}" class="text-light">식품</a></li>
+							<li><i class="far fa-eye"></i><a th:href="@{/main/category}+'/'+${beaty}" class="text-light">뷰티</a></li>
+				         </ul>
+	</div>
+</div>
+
+</body>
+</html>

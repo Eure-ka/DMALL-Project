@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>최종 주문서</title>
+</head>
+<body>
+<h1>상품 주문서</h1>
+<table >
+	 <tr>
+        <td>구매자</td><td th:text="${resulthashmap.get('saram')+'   님'}"></td></tr>
+	<tr>
+	     <td>우편번호</td><td th:text="${resulthashmap.get('postnum')}"></td>
+	 </tr>
+	 <tr>
+	     <td>주소</td><td th:text="${resulthashmap.get('address')}"></td>
+	 </tr>
+	 <tr>
+	     <td>상세주소</td><td th:text="${resulthashmap.get('detailadd')}"></td>
+	 </tr>
+	 <tr>
+	     <td>핸드폰</td><td th:text="${resulthashmap.get('phonenum')}"></td>
+	 </tr>
+	 <tr>
+	     <td>상품명</td><td th:text="${resulthashmap.get('pdname')}"></td>
+	 </tr>
+	 <tr>
+	     <td>원금액</td><td th:text="${resulthashmap.get('originprice')+'   원'}"></td>
+	 </tr>
+	 <tr>
+	     <td>할인금액</td><td th:text="${resulthashmap.get('discountprice')+'   원'}"></td>
+	 </tr>
+	 
+	 <tr>
+	     <td>결제금액</td><td th:text="${resulthashmap.get('finalprice')+'   원'}"></td>
+	 </tr>
+</table>
+
+<p>결제는 추후에 업데이트 하겠습니다.. ㅎㅎ</p>
+
+<a href="/main/home">메인 페이지로</a>
+</body>
+</html>
