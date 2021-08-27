@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default_layout">           
+<head>
+    <meta charset="UTF-8" />
+    <title>상품페이지</title>
+    <style>
+        td {
+    		align:center;
+    	}
+    	img {
+    		display:block;
+    		margin-top:10px;
+    		margin-right:10px;
+    	}
+    	h2, table {
+    		align:center;
+    	}
+    	.pd-name {
+    		font-weight:bold;
+    	}
+    	.pd-category {
+    		color:#007bff;
+    		font-weight:bold;
+    	}
+    	.pd-price span {
+    		font-weight:bold;
+    		font-size:28px;
+    	}
+    	.pd-baesongbi {
+    		font-weight:bold;
+    	}
+    	.pd-date, .pd-baesongbi, .pd-regman {
+    		font-size:20px;
+    	}
+    	.btn-info {
+    		float:right;
+    		background:#007bff;
+    		border-color:#007bff;
+		}
+    	#result2 {
+    		color:red;
+    	}
+    	#result3 {
+    		font-weight:bold;
+    	}
+    	#result2, #result {
+    		font-size:24px;
+    	}     	
+		/* 탭메뉴 CSS  */
+		ul.tabs{
+			margin: 0px;
+			padding: 0px;
+			list-style: none;
+		}
+		ul.tabs li{
+			background: none;
+			color: #222;
+			display: inline-block;
+			padding: 10px 15px;
+			cursor: pointer;
+		}
+		ul.tabs li.current{
+			background: #EDECE9;
+			color: #222;
+		}
+		.tab-content{
+			display: none;
+			background: #D3D1CB;
+			padding: 15px;
+		}
+		.tab-content.current{
+			display: inherit;	/*부모 태그의 display속성값을 상속받음*/
+		}
+		/* 리뷰테이블 CSS  */
+		tr th{		
+			padding-left: 2rem;
+    		padding-right: 2rem;
+		}
+    	tr td {
+    		text-align : center;
+  			vertical-align : middle;
+    		margin-left:10px;
+    		margin-right:10px;
+    		padding-left: 2rem;
+    		padding-right: 2rem;
+    	}
+    </style>
+    <script type="text/javascript">
+     function count(type){
+         // 결과를 표시할 element
+         let resultElement = document.getElementById('result');
+         let resultElement2 = document.getElementById('result2');
+         let resultElement3 = document.getElementById('result3');
+        
+         let org_price=document.getElementById('price').value;
+         let resultNumber = document.getElementById('resultNumber');
+         
+         // 현재 화면에 표시된 값
+         let number = resultElement.innerText;
+         let number2 = resultElement2.innerText;                                   
+         let number3 = resultElement3.innerText;   
+         
+         //계속 실패했던 이유 
+         //if(type === 'plus') {
+           // if(number < number2 ){
+              //number = parserInt(number) + 1;
+           //}
+         //위에서는 문자로 비교하고 구분후에 다시 숫자로 변환후 구분이라 숫자 2 이후 배열이 달라짐
+         //so 문자를 숫자변환을 미리 선언후 실행해야함
+         number = parseInt(number);
+         number2 = parseInt(number2);   
+         number3 = parseInt(number3);
+         
+         if(type === 'plus') {
+            if(number < number2 ){                                    
+             number = number +1;                                      
+             number3 =org_price * number;
+            }
+            
+         }else if(type === 'minus')  {
+            if(number >1){                                         
+               number = number - 1;
+               number3 = number3-org_price;
+              
+            }
+         }      
+         
+         
+         // 결과 출력                                                    
+         resultElement.innerText = number ;
+         //input의 id를 가져오고 그에대한 value 값이므로
+         resultNumber.value = number;
+         
+         resultElement3.innerText =  number3;
+         resultNumber2.value = number3;
+         
+       }
+
+    function move_purchase(){
+    	let resultNumber = $('input[name=resultNumber]').val();
+    	   let resultNumber2 = $('input[name=resultNumber2]').val();
+    	   let product_code = $('input[name=product_code]').val();
+    	   
+    	   location.href = '/purchase/pcpage?resultNumber=' + resultNumber + '&resultNumber2=' + resultNumber2+'&product_code='+product_code;
+    	}
+
+    function move_login(){
+    		alert("로그인 후에 상품 구매가 가능합니다.");
+    		
+    		location.href='/login';
+    	}
+	</script>
+
+ </head>
+<body>
+
+<div layout:fragment="content">
+	<div class="main-info">
+		<br>
+              <div class="inner">
+                       <div class="pd-img">
+                           <img th:src="@{/image/}+${productInfo.img_path}" alt="에러">
+                       </div>
+                       <div class="pd-text">
+                          <div class="pd-name"><span th:text=${productInfo.product_name}></span></div>
+                          <hr>
+                          <div class="pd-price">개당가격 : <span th:text=${productInfo.product_price}>원</span></div>
+                          <div class="pd-category">카테고리 : <span th:text=${productInfo.categoryVO.category_name}></span></div>
+                          
+                          
+                                                 
+                              <table>
+                              <tr>            <!-- style="float:left"는 div는 한줄씩인데 옆에 가능하게하는 기능 -->                     
+                                    <h3>남은 수량 : <div type="text" id='result2' th:text="${productInfo.product_amount}"></div></h3>         
+                                    
+                                    <h3>구매갯수 : <div type="text " id='result' >1</div></h3>            
+                                                                                             
+                                     <td><h3>                                   
+                                       <button type='button' onclick='count("minus")' />-</button>                           
+                                       <button type='button' onclick='count("plus")' />+</button>   
+                                       </h3>                                 
+                                    </td>
+                                    <input type="hidden"  id="price"  th:value="${productInfo.product_price}">
+                                    <h3>총 가격 :  <div type="text " id='result3' th:text="${productInfo.product_price}">0</div><input type="hidden" name="resultNumber2" th:value="${productInfo.product_price}"  id="resultNumber2"> </h3>   
+                              </tr>
+                              </table>                     
+                              <input type="hidden" name="product_code" th:value="${productInfo.product_code}">
+                              <div class="Btn">
+                              
+                              		<div class="shoppingbag">
+	                                      <form action="/basket/insert" method="post">
+	                                         <input name="infoBk" type="hidden" th:value="${productInfo.product_code}">
+	                                         <input type="hidden" name="resultNumber" value="1"  id="resultNumber">
+	                                         <input type="submit" value="장바구니 담기"> 
+	                                      </form>
+                                   </div> 
+	                              <input type="button" class="btn btn-info" onClick="move_purchase()"  value="구매하기">   									              
+                             </div>    
+               </div>
+         </div>
+         
+<!-- 탭메뉴 HTML -->
+	<div class=tab_container>
+
+		<ul class="tabs">	
+			<li class="tab-link current" data-tab="tab-1">상품리뷰</li>							
+			<li class="tab-link" data-tab="tab-2">상품상세정보</li>
+		</ul>
+		<div id="tab-1" class="tab-content current">
+		<div class="review">
+                  
+         <table>
+            <tr>
+               <th>글번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>사진&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>상품평&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>추천&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+               <th>추천수</th>
+            </tr>
+
+               <table th:each="reviewVO : ${productJoinReviewVO}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <tr th:each=" reviewlist:${reviewVO.reviewList}"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <td th:text="${reviewlist.rnum}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td><img th:src="@{/image/}+${reviewlist.review_img}" width=200 heigh=200 alt="이미지">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                         <td th:text="${reviewlist.review_content}"></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <td th:text="${reviewlist.user_id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td th:text="${#dates.format(reviewlist.review_date,'yyyy-MM-dd')}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><a th:href="@{'/main/review/'+${productInfo.product_code}+'/'+${reviewlist.rnum}}">도움됐어요</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><span th:text="${reviewlist.helpful}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                   </tr>   
+               </table>
+            
+         </table>
+         </div>  
+         </div>     
+         
+		<div id="tab-2" class="tab-content">
+			<div class="pd-date">등록날짜 : <span th:text="${#dates.format(productInfo.product_reg_date, 'yyyy-MM-dd')}"></span></div>
+            <div class="pd-baesongbi">배송비용 : <span th:text=${productInfo.product_shipping_fee}></span></div>
+           	<div class="pd-regman">판매자 : <span th:text=${productInfo.admin_id}></span></div>
+		</div>
+		        
+		
+	</div>
+	
+<!-- 탭메뉴 스크립트 -->
+<script>
+$(document).ready(function(){
+	
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('ul.tabs li').removeClass('current');
+		$('.tab-content').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+
+})
+</script>    
+         <a href="/main/home">메인 페이지로</a>
+  </div>
+</div>
+</body>
+</html>

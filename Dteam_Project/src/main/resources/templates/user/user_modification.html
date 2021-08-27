@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html mlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default_layout"> 
+<head>
+<meta charset="UTF-8">
+<title>ㅇㅇ쇼핑몰 > 회원정보 수정</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  table {
+  	text-align:center;
+  }
+  #submit {
+  	float:right;
+  }
+  h2 {
+  	text-align:center;
+  }
+  .content {
+  	margin-bottom:115px;
+	margin-left:50px;
+	margin-right:50px;
+	margin-top:25px;	
+  }
+  </style>
+  <script>
+	function modSubmit() {
+  		alert("수정되었습니다");
+  	}
+	</script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+	<h2 align="center">회원정보 수정</h2>
+	<br><br><br>
+		<div class="container">
+			<div class="table-response">
+				<table class="table">
+				<form action="modify" method="post">
+					<tr>
+						<td>아이디</td><td><input type="text" name="user_id" readonly th:value="${dbuserLoginVO.user_id}"></td>
+					</tr>
+					<tr>
+						<td>비밀번호</td><td><input type="password" name="user_pw" th:value="${dbuserLoginVO.user_pw}"></td>
+					</tr>
+					<tr>
+						<td>이름</td><td><input type="text" name="user_name" th:value="${session.username}"></td>
+					</tr>
+					<tr>
+						<td>핸드폰</td><td><input type="text" name="user_phone"  th:value="${dbuserLoginVO.user_phone}"></td>
+					</tr>
+					<tr>
+						<td>이메일</td><td><input type="text" name="user_email" th:value="${dbuserLoginVO.user_email}"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input id=submit type="submit" value="수정하기" onclick="modSubmit()"></td>
+					</tr>
+				</form>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

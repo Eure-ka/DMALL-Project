@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dteam_Project.index.model.IndexDAO">
+
+	<resultMap type="Dteam_Project.product.model.ProductVO" id="productMap">
+		<id property="product_code" column="product_code"/>
+		<result property="product_name" column="product_name"/>
+		<result property="product_price" column="product_price"/>
+		<result property="img_path" column="img_path"/>
+		<result property="product_amount" column="product_amount"/>
+		<result property="product_reg_date" column="product_reg_date"/>
+		<result property="admin_id" column="admin_id"/>
+		<result property="product_shipping_fee" column="product_shipping_fee"/>
+		<result property="sumimg_path" column="sumimg_path"/>
+		
+		<association property="categoryVO" javaType="Dteam_Project.product.model.CategoryVO" >
+			<id property="category_id" column="category_id"/>
+			<result property="category_name" column="category_name"/>
+		</association>
+	</resultMap>
+	
+	<select id="getProductlist" resultMap="productMap">
+		select a.product_code, a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id, a.product_shipping_fee ,a.sumimg_path
+			from product a,category b
+			where a.category_id=b.category_id and a.product_amount >0
+	</select>
+	
+	<select id="getProductInfo" parameterType="int" resultMap="productMap">
+		select a.product_code,a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id,a.product_shipping_fee,a.sumimg_path
+	    	from
+	         	product a,category b
+	   		where a.category_id=b.category_id and a.product_code=#{product_code}
+	</select>
+	
+	
+	
+	<select id="getCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+	<select id="cate_Count" resultType="int" parameterType="Dteam_Project.index.model.PageObj">
+		select count(*) from product where category_id = #{category_id}
+	</select>
+	
+	<select id="getBoardListPaging" parameterType="Dteam_Project.index.model.PageObj" resultMap="productMap" > 
+		select a.product_code, a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id, a.product_shipping_fee ,a.sumimg_path
+			from product a,category b
+			where a.category_id=b.category_id and a.product_amount >0
+			<choose>
+			     <when test="order == 'row'">order by a.product_price</when>
+			     <when test="order == 'high'">order by a.product_price desc</when>
+			     <when test="order == 'regdate'">order by a.product_reg_date desc</when>
+			     <otherwise>order by a.product_code</otherwise>
+		    </choose>
+			limit #{stRow}, #{edRow}
+	</select>
+	
+	<select id="getCategorylist" parameterType="int" resultMap="productMap">
+		select a.product_code,a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id,a.product_shipping_fee,a.sumimg_path
+	    	from
+	         	product a,category b
+	   		where a.category_id=b.category_id and a.product_amount >0 and b.category_id=#{category_id}
+	</select>
+	
+	<select id="cate_getBoardListPaging" parameterType="Dteam_Project.index.model.PageObj" resultMap="productMap" > 
+		select a.product_code,a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id,a.product_shipping_fee,a.sumimg_path
+	    	from product a,category b
+	   		where a.category_id=b.category_id and b.category_id=#{category_id} and a.product_amount >0
+	   		<choose>
+			     <when test="order == 'row'">order by a.product_price</when>
+			     <when test="order == 'high'">order by a.product_price desc</when>
+			     <when test="order == 'regdate'">order by a.product_reg_date desc</when>
+			     <otherwise>order by a.product_code</otherwise>
+		    </choose>
+			limit #{stRow}, #{edRow}
+	</select>
+	
+	<select id="searchname" parameterType="string" resultMap="productMap">
+		select a.product_code, a.product_name,a.product_price,b.category_name,a.img_path,a.product_amount,a.product_reg_date,a.admin_id, a.product_shipping_fee ,a.sumimg_path
+			from product a,category b where a.category_id=b.category_id and a.product_amount >0 and product_name like #{product_name} 
+			<if test="category_id != 0" >
+				and  a.category_id= #{category_id}
+			</if>
+	</select>
+	
+	
+</mapper>

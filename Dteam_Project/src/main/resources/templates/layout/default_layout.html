@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+	<title th:text="${TITLE}">title</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://kit.fontawesome.com/d991d2078a.js" crossorigin="anonymous"></script>
+	<style>
+  	body{
+  		margin:0;
+  		padding:0;
+  		overflow-x:hidden;
+  	}
+  	
+  	/* 헤더 부분 */
+  	.titleandsearch{
+  		display: flex;
+  		flex-direction: row;
+  		padding-top: 4rem;
+  		padding-right: 30rem;
+  	}
+  	
+ 	.header-search{
+ 		text-align: center;
+ 		padding-left: 4rem;
+ 	}
+ 	
+ 	.search-form .search-select{
+ 		width: 8rem;
+ 		height: 3rem;
+ 		border: 2px solid #a0a0a0;
+ 		border-radius: 10px;
+ 	}
+ 	
+ 	.search-form .search-input{
+ 		width: 20rem;
+ 		height: 3rem;
+ 		border: 2px solid #a0a0a0;
+ 		border-radius: 10px;
+ 	}
+ 	.search-form .search-btn{
+ 		background-color: transparent !important;
+    	background-image: none !important;
+    	border-color: transparent;
+    	border: none;
+    	color: black;
+		width: 3rem;
+ 		height: 3rem;
+ 		cursor:pointer;
+ 	}
+
+ 	.header-menu{
+ 		position:relative;
+ 		top:-78px;
+ 		left:90%;
+ 	}
+ 	
+ 	.header-icon{
+ 		width:10rem;
+ 		display:flex;
+ 		flex-direction:row;
+ 		justify-content:space-between;
+ 		position:relative;
+ 		left:88%;
+ 		margin-top: 1rem;
+ 	}
+ 	
+ 	.header-icon i{
+ 		font-size: 4rem
+ 	}
+ 	
+ 	.header-icon span{
+ 		font-size: 1rem
+ 	}
+ 	
+  	/* 인덱스 부분 */
+  	
+  	.searchpg{
+  		height:40rem;
+  	}
+  	.chooseorder{
+ 		position: relative;
+ 		left:40%;
+ 	}
+ 	
+ 	.errMsg{
+ 		text-align: center;
+ 	}
+ 	
+    .product-list{
+    	max-width:70rem;
+    	height:auto;
+    	position: relative;
+    	left:30%;
+    }
+ 	.product-list .inner{
+ 		display:flex;
+ 		flex-direction: row;
+ 		flex-wrap:wrap;
+ 		justify-content: space-around;
+ 	}
+ 	
+ 	.product-list .inner .persnal-info{
+ 		padding: auto 3rem;
+ 	}
+ 	
+ 	.product-list .inner .persnal-info:hover{
+ 		border: 1px solid black;
+
+ 	}
+ 	
+ 	.product-list .inner .pd-description{
+ 		text-align: center;
+ 	}
+ 	
+ 	.product-list .inner .pd-description .pd-name span{
+ 		font-size: 1.5rem;
+ 		font-weight: 300;
+ 	}
+ 	
+ 	.product-list .inner .pd-description .pd-price span{
+ 		font-size: 2rem;
+ 		font-weight: 400;
+ 	}
+ 	
+ 	.product-list .inner .persnal-info .pd-image{
+ 		width: 20rem;
+ 		height: 10rem;
+ 	}
+ 	.product-list .inner .persnal-info .pd-image img{
+ 		width:100%;
+ 		height:100%;
+ 		border-radius: 10px;
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	.pagination{
+ 		position:relative;
+ 		margin-top: 7rem;
+		left:45%;
+ 	}
+ 	
+ 	
+ 	/* productinfo 부분 */
+	.main-info{
+		   	width:100%;
+			height:auto;
+	    	position: relative;
+	    	left:30%;
+		}
+		
+		.main-info .inner{
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		
+		.main-info .inner .pd-img {
+		  padding-right: 2rem;
+		}
+		
+		.main-info .inner .pd-img img{
+			width: 300px;
+			height: 300px;
+		}
+		
+		.main-info .inner .pd-text{
+			padding-top :1rem;
+			padding-bottom :1rem;
+			font-size:2rem;
+		}
+		
+		.main-info .inner .pd-text .pd-name span{
+			font-size:3rem;
+		}
+		
+		.main-info .inner .pd-text .Btn{
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			font-size: 1.5rem;
+		}
+		
+		.main-info .inner .pd-text .Btn .shoppingbag{
+			border-radius:16px;
+			background-color: yellow;
+			margin: 0 3rem;
+			
+		}
+		
+		.main-info .inner .pd-text .Btn .purchase{
+			border-radius:16px;
+			background-color: yellow;
+		}
+		
+		
+		#category-box{;
+			position:absolute;
+			top:17rem;
+			width:15rem;
+			height:10rem;
+			background-color: #81c147;
+			color:white;
+			text-align: center;
+			border-radius: 4px;
+		}
+		
+		#category-box i{
+			padding-top: 2rem;
+		}
+		
+		.category-menu {
+			display: none;
+			list-style:none;
+			background-color: #ece6cc;
+			height: 59.5rem;
+			color:white;
+			border-radius: 4px;
+		}
+		
+		.category-menu li{
+			font-size: 1.5rem;
+			padding-top: 5rem;
+		}
+		
+		.category-menu li a{
+			padding-left:1rem;
+			padding-right: 1rem;
+		}
+		
+		
+		.category-menu.active{
+			display:block;
+		}
+
+		.footer{
+			padding-top:3rem;
+			text-align:center;
+			height: 100px;
+			background-color: #bdbebd;
+		}
+	 </style>
+</head>
+<body>
+	<!-- header -->
+	<th:block th:replace="layout/header :: header(100,200,300,400)"></th:block>
+	<!-- content -->
+	<th:block layout:fragment="content"></th:block>
+	<!-- aside -->
+	<th:block th:replace="layout/aside :: aside(100,200,300,400)"></th:block>
+	<!-- footer -->
+	<th:block th:replace="layout/footer::footer"></th:block>
+	
+	<script type="text/javascript">
+		
+		const categoryBtn = document.getElementById('category-box');
+		const categorylist = document.querySelector('.category-menu');
+	
+		
+		function show_list(){
+			categorylist.classList.toggle('active');
+		}
+		
+		categoryBtn.addEventListener("click",show_list);
+
+</script>
+</body>
+</html>

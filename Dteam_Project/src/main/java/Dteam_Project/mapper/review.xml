@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dteam_Project.review.model.ReviewDAO">
+
+	<resultMap type="Dteam_Project.review.model.ReviewVO" id="reviewMap">
+		<id property="rnum" column="rnum"/>
+		<result property="product_code" column="product_code"/>
+		<result property="review_content" column="review_content"/>
+		<result property="user_id" column="user_id"/>
+		<result property="review_date" column="review_date"/>
+		<result property="review_img" column="review_img"/>	
+		<result property="helpful" column="helpful"/>
+	</resultMap>
+	
+	<resultMap type="Dteam_Project.product.model.ProductVO" id="productJoinReviewMap">
+		<id property="product_code" column="product_code"/>
+		<result property="product_price" column="product_price"/>
+		<result property="category_id" column="category_id"/>
+		<result property="img_path" column="img_path"/>
+		<result property="product_amount" column="product_amount"/>
+		<result property="product_reg_date" column="product_reg_date"/>
+		<result property="admin_id" column="admin_id"/>
+		<result property="product_shipping_fee" column="product_shipping_fee"/>
+		<result property="sumimg_path" column="sumimg_path"/>
+		
+		<collection column="product_code" property="reviewList" javaType="java.util.List" ofType="Dteam_Project.review.model.ReviewVO" resultMap="reviewMap"></collection>
+		
+	</resultMap>
+
+	<select id="getReviewList" resultMap="productJoinReviewMap"> 
+      select b.rnum, b.review_content, b.user_id, b.review_date, b.review_img, b.helpful
+         from product a, review b
+         where a.product_code=b.product_code and a.product_code = #{product_code}
+   </select>
+	
+	<select id="getReview" parameterType="integer" resultType="Dteam_Project.review.model.ReviewVO"> 
+		select product_code, rnum, review_content, helpful, review_date 
+		   from review
+		where rnum = #{rnum}
+	</select>
+
+	<update id="helpfulIncrease" parameterType="integer">
+		UPDATE review
+ 			SET helpful = helpful + 1
+		WHERE rnum = #{rnum}
+	</update>
+		
+</mapper>

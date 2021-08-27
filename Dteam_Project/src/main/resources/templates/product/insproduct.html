@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상품 입력</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>상품입력 페이지</h1>
+	<form action="/pd/pdreg" method="post" enctype="multipart/form-data">
+		<input type="hidden"  name="admin_id" th:value="${admin_id}"> 
+		<table>
+		<tr>
+			<td>상품명</td><td><input type="text" name="product_name"></td>
+		</tr>
+		<tr>
+			<td>카테고리</td>
+		</tr>
+			<tr>
+				<td tr th:each="Categorylist : ${categorylist}">
+				<input type="radio" name="category_id" th:value="${Categorylist.category_id}" ><span th:text="${Categorylist.category_name}"></span>
+				</td>
+			</tr>
+		<tr>
+			<td>수량</td><td><input type="text" name="product_amount"></td>
+		</tr>
+		<tr>
+			<td>가격</td><td><input type="text" name="product_price"></td>
+		</tr>
+		<tr>
+			<td>배송비</td><td><input type="text" name="product_shipping_fee"></td>
+		</tr>
+		</table>
+		<div class="inputArea">
+			 <label for="gdsImg">이미지</label>
+			 <input type="file" id="gdsImg" name="files"/>
+			 <div class="select_img"><img src="" /></div>
+		</div>
+		<input type="submit" value="상품등록">
+	</form>
+	<a href="javascript:history.back()">뒤로가기</a>
+	
+	 <script>
+		  $("#gdsImg").change(function(){
+		   if(this.files && this.files[0]) {
+		    var reader = new FileReader;
+		    reader.onload = function(data) {
+		     $(".select_img img").attr("src", data.target.result).width(500);        
+		    }
+		    reader.readAsDataURL(this.files[0]);
+		   }
+		  });
+	</script>
+</body>
+</html>
