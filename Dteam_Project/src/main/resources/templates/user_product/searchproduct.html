@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html mlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default_layout">
+<head>
+<meta charset="UTF-8">
+<title>검색한 상품 페이지</title>
+</head>
+<body>
+<div class="main" layout:fragment="content">
+
+		<span th:text="${message}"></span>
+		
+		<div class="product-list">
+			    	<div class="inner">
+			        	<div class="persnal-info" th:each="productInfo:${productlist}">
+			            	<div class="pd-image">
+				                	<img th:src="@{/image/}+${productInfo.sumimg_path}">
+				            </div>
+				            <div class="pd-name"><a th:href="@{/main/pdinfo/}+${productInfo.product_code}"><span th:text=${productInfo.product_name}></span></a></div>
+				            <div class="pd-price"><span  th:text=${productInfo.product_price}></span>원</div>
+				            <div class="pd-regdate"><span  th:text="${#dates.format(productInfo.product_reg_date, 'yyyy-MM-dd')}"></span></div>
+				            <div class="pd-category"><span th:text=${productInfo.categoryVO.category_name}></span></div>
+			        	</div>
+			    </div>
+		</div>	
+</div>		
+</body>
+</html>

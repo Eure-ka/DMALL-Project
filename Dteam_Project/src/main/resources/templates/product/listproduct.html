@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 목록 페이지</title>
+</head>
+<body>
+	<h1>상품 목록</h1>
+	<table border="1">
+		<tr>
+			<th>상품코드</th>
+			<th>상품명</th>
+			<th>상품이미지</th>
+			<th>수량</th>
+			<th>가격</th>
+			<th>등록일</th>
+			<th>등록자</th>
+			<th>배송비</th>
+			<th>카테고리</th>
+			<th></th>
+		</tr>
+		<tr th:each="Productlist : ${productlist}">
+			<td th:text="${Productlist.product_code}"></td>
+			<td th:text="${Productlist.product_name}"></td>
+			<td><img th:src="@{/image/}+${Productlist.sumimg_path}"></td>
+			<td th:text="${Productlist.product_amount}"></td>
+			<td th:text="${Productlist.product_price}"></td>
+			<td th:text="${#dates.format(Productlist.product_reg_date, 'yyyy-MM-dd')}"></td>
+			<td th:text="${Productlist.admin_id}"></td>
+			<td th:text="${Productlist.product_shipping_fee}"></td>
+			<td th:text="${Productlist.categoryVO.category_name}"></td>
+			<td><a th:href="@{uptpd}+'/'+${Productlist.product_code}">상품정보보기</a></td>
+		</tr>
+	</table>
+	
+<a href="/pd/main">메인으로</a>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ㅇㅇ쇼핑몰 > 회원가입</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  table {
+  	text-align:center;
+  }
+  #submit {
+  	float:right;
+  }
+  h2 {
+  	text-align:center;
+  }
+  </style>
+</head>
+<body>
+	<div class="main">
+			<h2>가입 신청서	</h2>
+			<br><br><br>
+		<div class="container">
+			<div class="table-response">
+				<table class="table">
+				<form action="register" method="post">
+					<tr>
+						<td>아이디</td><td><input type="text" name="user_id" id="user_id"></td>
+					</tr>
+					<tr>
+						<td>비밀번호</td><td><input type="password" name="user_pw"></td>
+					</tr>
+					<tr>
+						<td>이름</td><td><input type="text" name="user_name"></td>
+					</tr>
+					<tr>
+						<td>핸드폰</td><td><input type="text" name="user_phone"></td>
+					</tr>
+					<tr>
+						<td>이메일</td><td><input type="text" name="user_email"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="가입" onclick="submitFunction()"></td>
+					</tr>
+				</form>
+				</table>
+			</div>
+		</div>
+	</div>
+<script>
+  	function submitFunction() {
+  		alert("가입되었습니다");
+  	}
+ </script>
+</body>
+</html>
