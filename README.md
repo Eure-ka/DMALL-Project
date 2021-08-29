@@ -24,8 +24,7 @@
  - #### 상품별 리뷰
  - #### 쿠폰적용 및 할인
  
-- #### 화면구현
-
+ - #### 화면구현
   - ##### 메인화면
     <img width="933" alt="kk" src="https://user-images.githubusercontent.com/66476875/131237312-f47e6d61-bda2-4466-92ac-b7e70e862eca.PNG">
     
