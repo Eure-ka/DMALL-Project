@@ -142,9 +142,6 @@ function setSum(){
 								  -->
 								<button type="button" th:onclick='count("minus",[[${status.index}]])'>-</button>
 								<button type="button" th:onclick='count("plus",[[${status.index}]])'>+</button>
-								<!--   위에 status.index로 몇번쩨의 데이터인지 알려줌 
-														
-								  -->
 							</td>
 									
 							<td th:id='${"resultTot"+status.index}' th:text="${BasketVO.product_price*BasketVO.bk_resultnumber}"></td>
