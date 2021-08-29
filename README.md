@@ -35,16 +35,16 @@
   - #### 아이디 비밀번호 찾기
     ![image](https://user-images.githubusercontent.com/66476875/131237872-dffc4daf-08de-46d6-b5d4-7fa480a30a6c.png)
     
-   -#### 상품 정보
+  - #### 상품 정보
     ![image](https://user-images.githubusercontent.com/66476875/131237566-168e887b-85fd-4e2e-9976-aa4270972109.png)
 
-   -#### 카테고리 별 상품
+  - #### 카테고리 별 상품
     ![image](https://user-images.githubusercontent.com/66476875/131237600-37a0b8d7-0001-44c9-a4c0-0759dd3d757d.png)
    
-   -#### 장바구니
+   - #### 장바구니
     ![image](https://user-images.githubusercontent.com/66476875/131237521-09b0f6d6-8f28-476a-88ed-ad446b0a45d3.png)
     
-   -#### 리뷰 페이지
+   - #### 리뷰 페이지
     ![image](https://user-images.githubusercontent.com/66476875/131237818-725d5c64-7cbb-41ae-a8be-325f312c100c.png)
 
    
