@@ -77,7 +77,6 @@ function count(type, statusIndex){
 function setSum(){
 	let arr= new Array();
 	
-	
 	$('[id*=resultTot]').each(function(index, item){
 		let totPrice = $(item).text();
  		//alert(totPrice);   
@@ -132,10 +131,9 @@ function setSum(){
 							 <td><img th:src="@{/image/}+${BasketVO.sumimg_path}" alt="에러"></td>
 							<td th:text="${BasketVO.product_name}"></td>
 					
-							<td >
+							<td>
 								<div type='text' th:id='${"result"+status.index}' th:text="${BasketVO.bk_resultnumber}"></div>
 								<input type="hidden" name="resultNumber"  id="resultNumber">
-								<div th:id='${"resultTot"+status.index}' th:text="${BasketVO.product_price*BasketVO.bk_resultnumber}"></div>
 								<input type='hidden'name="sumtest" id="sumtest" th:value="${BasketVO.product_price*BasketVO.bk_resultnumber}">
 								<input type="hidden" name="resultNumber2" th:value="${BasketVO.product_price}" id="resultNumber2"/>
 								<input type= "hidden"  th:id='${"price"+status.index}'  th:value="${BasketVO.product_price}">
@@ -149,7 +147,7 @@ function setSum(){
 								  -->
 							</td>
 									
-							<td th:text="${BasketVO.product_price}"></td>
+							<td th:id='${"resultTot"+status.index}' th:text="${BasketVO.product_price*BasketVO.bk_resultnumber}"></td>
 							<td th:text="${BasketVO.product_shipping_fee}"></td>
 						</tr>
 					</tbody>
@@ -168,9 +166,9 @@ function setSum(){
 				<td>총 결제예정 금액 </td>
 			</tr>
 			<td><input type="text" id="order_sum" readonly value=""> </td> 
-			<td><input type="text" id="" readonly value=""> </td>
-			<td><input type="text"  readonly value=""> </td>
-			<td><input type="text"  readonly value=""> </td>	
+			<td><input type="text" id="" readonly value="2500"> </td>
+			<td><input type="text"  readonly value="20000"> </td>
+			<td><input type="text"  readonly value="1,115,835"> </td>	
 		</table>		
 					
 	</div>
