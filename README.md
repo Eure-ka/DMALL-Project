@@ -51,6 +51,10 @@
 
      - #### 리뷰 페이지
       ![image](https://user-images.githubusercontent.com/66476875/131237818-725d5c64-7cbb-41ae-a8be-325f312c100c.png)
+      
+     - #### 구매 페이지
+       ![image](https://user-images.githubusercontent.com/66476875/131251173-481e17c3-61ec-4a9b-8581-9768cb227e6d.png)
+
 
    
 
