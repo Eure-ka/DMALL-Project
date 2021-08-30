@@ -17,19 +17,18 @@ $(function(){ //전체선택 체크박스 클릭
 			// 전체선택 체크박스가 해제된 경우 
 			} else { 
 				//해당화면에 모든 checkbox들의 체크를해제시킨다. 
-				$("input[type=checkbox]").prop("checked",false); } }) })
+				$("input[type=checkbox]").prop("checked",false); } }) })			
 
-
-				
-
-
-				
 		
 function count(type, statusIndex){
 	// 결과를 표시할 element
 	//statusIndex 추가이유 : index 번호를 알려줌  변수이름은 아무렇게나 상관 없음
 	let amount111 = document.getElementById('result'+statusIndex);
 	let amount222 = document.getElementById('resultTot'+statusIndex);
+	let changeqnt =document.getElementById('changeqnt');
+	let bk_num=document.getElementById('product_ck').value;
+	let changebk_num=document.getElementById('changebk_num');
+	
 
 	//let resultNumber = document.getElementById('resultNumber');
 	let resultNumbers = document.getElementsByName('resultNumber');
@@ -67,8 +66,13 @@ function count(type, statusIndex){
 	amount111.innerText = number;
 	resultNumber.value = number;
 	
+	changebk_num.value=bk_num;	// 변경된 bk_num 입력
+	changeqnt.value=number; // 변경된 수량 입력
+	
 	amount222.innerText = number2;
 	resultNumber2.value = number2;
+	
+	
 
 	setSum();
 	
@@ -98,7 +102,7 @@ function setSum(){
 	}
 	
 	order_sum.value = sum;
-	
+	total_sum.value=sum;
 }
 
 </script>
@@ -115,18 +119,10 @@ function setSum(){
 							<td>상품명</td>
 							<td>수량</td>		
 							<td>금액</td>
-							<td>배송비</td>
 						</tr>
 					</thead>
 					<tbody>	
 						<tr th:each="BasketVO, status : ${basketList}">
-						<!-- <tr th:each="BasketVO : ${basketList}">  
-							status = 순서를 알려주는 명령어 
-						    th:each="BasketVO : ${basketList => 배열로 데이터 받음
-							수정이유 : 수량 바꾸는 코드가 배열로 받은 데이터가 몇번쩨인지 알지 못해서 오류
-							status 를 사용해 몇번쩨 데이터인지 알려줌				
-									
-						-->
 							<td><input id=product_ck name="delBkNum" type=checkbox th:value="${BasketVO.bk_num}"></td>
 							 <td><img th:src="@{/image/}+${BasketVO.sumimg_path}" alt="에러"></td>
 							<td th:text="${BasketVO.product_name}"></td>
@@ -134,7 +130,7 @@ function setSum(){
 							<td>
 								<div type='text' th:id='${"result"+status.index}' th:text="${BasketVO.bk_resultnumber}"></div>
 								<input type="hidden" name="resultNumber"  id="resultNumber">
-								<input type='hidden'name="sumtest" id="sumtest" th:value="${BasketVO.product_price*BasketVO.bk_resultnumber}">
+								<input type='hidden' name="sumtest" id="sumtest" th:value="${BasketVO.product_price*BasketVO.bk_resultnumber}">
 								<input type="hidden" name="resultNumber2" th:value="${BasketVO.product_price}" id="resultNumber2"/>
 								<input type= "hidden"  th:id='${"price"+status.index}'  th:value="${BasketVO.product_price}">
 								<!--  id='resultTot'  => th:id='${"result"+status.index}' 위에 status.index로 몇번쩨의 데이터인지 알려줌 
@@ -145,7 +141,6 @@ function setSum(){
 							</td>
 									
 							<td th:id='${"resultTot"+status.index}' th:text="${BasketVO.product_price*BasketVO.bk_resultnumber}"></td>
-							<td th:text="${BasketVO.product_shipping_fee}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -155,27 +150,25 @@ function setSum(){
 
 	<div>
 		<h4>결제 금액 예정</h4>
-		<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
-			<tr>
-				<td>총 주문 금액</td>
-				<td>배 송 비</td>
-				<td>총 할인 금액</td> 
-				<td>총 결제예정 금액 </td>
-			</tr>
-			<td><input type="text" id="order_sum" readonly value=""> </td> 
-			<td><input type="text" id="" readonly value="2500"> </td>
-			<td><input type="text"  readonly value="20000"> </td>
-			<td><input type="text"  readonly value="1,115,835"> </td>	
-		</table>		
-					
+			<form action="/purchase/bkpgpage" method="get">
+				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
+					<tr>
+						<td>총 주문 금액</td>
+						<td>총 결제예정 금액 </td>
+					</tr>
+					<tr>
+						<td><input type="text" id="order_sum" readonly value=""> </td> 
+						<td><input type="text" id ="total_sum" name="total_money" readonly value=""> </td>	
+					</tr>
+				</table>
+				<input type="hidden" id="changebk_num" name="bk_num" value="">
+				<input type="hidden" id="changeqnt" name="bk_resultnumber" value=""> 
+				<input type=submit value="주문하기">
+		</form>	
 	</div>
-	<div>
-		<form>
-			<input id=oder name=주문하기 type=submit value="주문하기">
-		</form>
-	
-	</div>
-
-	
+<br>
+<br>
+<br>
+<a href="/main/home">메인페이지로</a>	
 </body>
 </html>

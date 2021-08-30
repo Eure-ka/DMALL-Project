@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>DMALL 구매창</title>
+<title>ㅇㅇ쇼핑몰 > 구매창</title>
  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -17,7 +17,7 @@
 <body>
 	<div class="container">
 		<div class="table-response">
-		<form name="pForm" action="/purchase/final_result" method="post">
+		<form name="pForm" action="/purchase/bkfinal_result" method="post">
 			<br>
 			<h4>배송정보</h4>
 			<table  width = "550" height="200" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
@@ -67,25 +67,23 @@
 			
 				<h4>상품 정보</h4>
 				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
-					<td>선택 상품</td>
-					<td>
-					상품명<input type="text" name="pdname" th:value="${productInfo.product_name}" readonly>
-					갯수 <input type="text"  name="pdqnt" th:value="${resultNumber}" readonly><br>			
-					총금액<input type="text" id="productprice"   th:value="${resultNumber2}" readonly> 
-					</td>	
+					<tr>
+						<td>선택 상품</td>
+					</tr>
+					<tr th:each="basketlist,status : ${basketList}">
+						<td>
+						상품명<input type="text" name="pdname" th:value="${basketlist.product_name}" readonly>
+						갯수 <input type="text"  name="pdqnt" th:value="${basketlist.bk_resultnumber}" readonly><br>			
+						</td>
+					</tr>
+					<tr>
+						<td>총금액<input type="text" id="productprice"   th:value="${resultmoney}" readonly></td>
+					</tr>
 				</table>
 				
 				<h4>쿠폰 할인</h4>
 				<table  width = "550" height="100" class="purchase"  bordercolor="#CCDDFF" border="2" cellspacing="0">
-					
-					<tr th:if="${productInfo.category_id == 100}">
-						<td>																																														
-							상품/주문 쿠폰&nbsp;&nbsp;&nbsp;<input type="text" id="couponDiscountRateInput" readonly value="0">원&nbsp;&nbsp;&nbsp;<input type="button" id="useCoupon" value="쿠폰적용" onclick="openPopupWindow()">&nbsp;&nbsp;&nbsp;(사용가능:<span  class="couponsoo" th:text="${coupocount}+'장'"> </span>||보유:<span class="couponsoo" th:text="${coupocount+'장'}"> </span>)
-							<input type="hidden" name="coupon_id" id="forcpid">
-						</td>
-					</tr>
-					
-					<tr th:unless="${productInfo.category_id == 100}">
+					<tr>
 						<td>
 						상품/주문 쿠폰&nbsp;&nbsp;&nbsp;<input type="text" readonly value="0">원&nbsp;&nbsp;&nbsp;<input type="button" value="쿠폰적용" disabled>&nbsp;&nbsp;&nbsp;(사용가능:<span> 0장&nbsp;||&nbsp;&nbsp;&nbsp;</span>보유:<span> 0장</span>)
 						</td>
@@ -117,8 +115,6 @@
 					<td colspan="1"><input type="submit" value="차이페이" onclick="purchaseSubmit()"></td>
 				</tr>
 			</table>	
-			
-			<input type="hidden" name="product_code" th:value="${productInfo.product_code}">
 		</form>
 </div>
 <script>

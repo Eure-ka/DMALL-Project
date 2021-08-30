@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mysql.cj.protocol.a.NativeConstants.IntegerDataType;
 
+import Dteam_Project.basket.model.BasketVO;
+import Dteam_Project.basket.service.BasketService;
 import Dteam_Project.index.service.IndexService;
 import Dteam_Project.purchase.model.CouponVO;
 import Dteam_Project.purchase.model.ProductVO;
@@ -36,9 +38,12 @@ public class purchaseController {
 	@Autowired
 	purchaseService purchaseService;
 	
+	@Autowired
+	private BasketService basketService;
+	
 
 	@GetMapping("pcpage")
-	public String resultNumberPost(HttpServletResponse response,@RequestParam(value="resultNumber",required=false) String resultNumber,@RequestParam(value="resultNumber2",required=false) String resultNumber2,@RequestParam(value="product_code",required=false) String before_product_code,Model model,HttpSession session) throws Exception{
+	public String resultNumberGet(HttpServletResponse response,@RequestParam(value="resultNumber",required=false) String resultNumber,@RequestParam(value="resultNumber2",required=false) String resultNumber2,@RequestParam(value="product_code",required=false) String before_product_code,Model model,HttpSession session) throws Exception{
 		
 		
 		UserLoginVO userLoginVO = (UserLoginVO)session.getAttribute("userLoginVO");
@@ -137,5 +142,37 @@ public class purchaseController {
 		}
 		
 	}
+	
+	
+	 @GetMapping("bkpgpage") 
+	 public String bkpurchase (@RequestParam("bk_num") Integer bk_num,@RequestParam("bk_resultnumber") Integer bk_resultnumber,HttpServletRequest request,BasketVO basketVO,Model model) throws Exception{
+		 	
+		    basketVO.setBk_num(bk_num);
+		 	basketVO.setBk_resultnumber(bk_resultnumber);
+		 
+		 
+		 	basketService.updateqnt(basketVO);
+		 
+		 	String resultmoney=request.getParameter("total_money");
+		 
+		 	List<BasketVO> basketList = basketService.getBasket(basketVO);
+			
+			model.addAttribute("basketList" , basketList);
+			model.addAttribute("resultmoney", resultmoney);
+			
+	 
+		 return "purchase/bkpurchase"; 
+	 }
+	 
+	 
+	 @PostMapping("bkfinal_result")
+	 public String go_bkresult(@RequestParam HashMap<String,String> paramMap,Model model) throws Exception{
+		 
+		 
+		 	model.addAttribute("resulthashmap", paramMap);
+		 
+		 	return "purchase/resultpage";
+	 	}
+	 
 
 }

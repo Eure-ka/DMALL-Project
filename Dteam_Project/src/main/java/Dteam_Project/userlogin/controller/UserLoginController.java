@@ -186,17 +186,13 @@ public class UserLoginController {
 			//check
 			if(userLoginVO.getUser_pw().equals(user_pw)) { //자바에서 문자열이 같은지 비교할떄는 equals 메소드 사용
 				
-				
-				//세션에 값을 저장
-				///추가한 이유 => 위에꺼는 아이디만 비교해서 하는거여서 .getUser_name 붙여서 가져온거지만
-				
-				///밑에꺼는 세션에 userLoginVO값들을(필드 여러개,bean형태) 저장하기 위해 
-				////위처럼 userLoginVO.getUser_name()를 가져오려면 문자열이므로 String getUser_id = (String)session.getAttribute("getUser_id");
-				
-				session.setAttribute("userLoginVO", userLoginVO); 
-				session.setAttribute("userid", userLoginVO.getUser_id()); 
+
 				
 				ScriptUtils.alertAndMovePage(response, userLoginVO.getUser_id()+"님 환영합니다.", "/main/home");
+				session.setAttribute("userLoginVO", userLoginVO); 
+				
+				
+				session.setAttribute("userid", userLoginVO.getUser_id()); 
 				
 				return "index";
 				

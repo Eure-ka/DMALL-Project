@@ -17,14 +17,11 @@
 </resultMap>
 
 
-
-
   
 <insert id="insertProduct_info" parameterType="Dteam_Project.basket.model.BasketVO">  
    insert into shpping_bk(user_id,product_code,bk_resultnumber) 
       values(#{user_id},#{product_code},#{bk_resultnumber})
-      
-</insert> 
+</insert>
 
 
 <select id="getBasket" parameterType="Dteam_Project.basket.model.BasketVO" resultMap="basketMap">
@@ -41,6 +38,10 @@
 		</foreach>
 		)
 </delete>
+
+<update id="updateqnt" parameterType="Dteam_Project.basket.model.BasketVO">
+	update shpping_bk set bk_resultnumber=#{bk_resultnumber} where bk_num=#{bk_num}
+</update>
 
 </mapper>
  

@@ -23,6 +23,7 @@ import Dteam_Project.utils.ScriptUtils;
 @Controller
 @RequestMapping("basket")
 public class BasketController {
+	
 	@Autowired
 	private BasketService basketService;
 	
@@ -48,14 +49,6 @@ public class BasketController {
 			
 			return "basket/basketlist";
 		}
-		
-		
-		
-		 
-		 
-		 
-		 
-		
 		 
 	}
 	

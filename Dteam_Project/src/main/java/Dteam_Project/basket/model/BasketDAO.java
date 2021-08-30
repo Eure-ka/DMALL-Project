@@ -17,6 +17,6 @@ public interface BasketDAO {
 	
 	public int BasketRemove(Integer delBkNum[]) throws SQLException;
 
-	
+	public int updateqnt(BasketVO basketVO) throws SQLException;
 	
 }

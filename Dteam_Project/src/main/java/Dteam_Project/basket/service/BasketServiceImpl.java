@@ -35,6 +35,12 @@ public class BasketServiceImpl implements BasketService{
 		return cnt;
 	}
 
-	
+	@Override
+	public int updateqnt(BasketVO basketVO) throws SQLException {
+		
+		int cnt =basketDAO.updateqnt(basketVO);
+		
+		return cnt;
+	}
 
 }
