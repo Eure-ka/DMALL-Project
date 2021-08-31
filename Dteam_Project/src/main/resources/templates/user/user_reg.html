@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+	<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layout/default_layout">  
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
 <head>
-<meta charset="UTF-8">
-<title>ㅇㅇ쇼핑몰 > 회원가입</title>
- <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <title> DMALL.COM > 회원가입</title>
   <style>
   table {
   	text-align:center;
@@ -20,6 +21,7 @@
   </style>
 </head>
 <body>
+<div layout:fragment="content">
 	<div class="main">
 			<h2>가입 신청서	</h2>
 			<br><br><br>
@@ -50,6 +52,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 <script>
   	function submitFunction() {
   		alert("가입되었습니다");
